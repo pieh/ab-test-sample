@@ -9,6 +9,7 @@ const { createFilePath } = require(`gatsby-source-filesystem`)
 
 // Define the template for blog post
 const blogPost = path.resolve(`./src/templates/blog-post.js`)
+const blogPostB = path.resolve(`./src/templates/blog-post-b.js`)
 
 /**
  * @type {import('gatsby').GatsbyNode['createPages']}
@@ -49,15 +50,41 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       const previousPostId = index === 0 ? null : posts[index - 1].id
       const nextPostId = index === posts.length - 1 ? null : posts[index + 1].id
 
-      createPage({
-        path: post.fields.slug,
-        component: blogPost,
-        context: {
-          id: post.id,
-          previousPostId,
-          nextPostId,
-        },
-      })
+      console.log({ slug: post.fields.slug })
+
+      if (post.fields.slug === "/hello-world/") {
+        createPage({
+          path: post.fields.slug + `variant-a/`,
+          matchPath: post.fields.slug,
+          component: blogPost,
+          context: {
+            id: post.id,
+            previousPostId,
+            nextPostId,
+          },
+        })
+
+        createPage({
+          path: post.fields.slug + `variant-b/`,
+          matchPath: post.fields.slug,
+          component: blogPostB,
+          context: {
+            id: post.id,
+            previousPostId,
+            nextPostId,
+          },
+        })
+      } else {
+        createPage({
+          path: post.fields.slug,
+          component: blogPost,
+          context: {
+            id: post.id,
+            previousPostId,
+            nextPostId,
+          },
+        })
+      }
     })
   }
 }

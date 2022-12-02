@@ -19,7 +19,7 @@ const BlogPostTemplate = ({
         itemType="http://schema.org/Article"
       >
         <header>
-          <h1 itemProp="headline">Variant A: {post.frontmatter.title}</h1>
+          <h1 itemProp="headline">Variant B: {post.frontmatter.title}</h1>
           <p>{post.frontmatter.date}</p>
         </header>
         <section
